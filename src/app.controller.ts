@@ -21,9 +21,10 @@ export class AppController {
   @Post()
   @HttpCode(HttpStatus.OK)
   handleWebhook(@Body() admissionReview: AdmissionReview): AdmissionReview {
-    console.log('Received admission review request: ', admissionReview);
-    console.log('object: ', admissionReview.request.object);
-    console.log('oldObject: ', admissionReview.request.oldObject);
+    console.log(
+      'Received admission review request: ',
+      JSON.stringify(admissionReview),
+    );
     return this.appService.validate(admissionReview);
   }
 }
