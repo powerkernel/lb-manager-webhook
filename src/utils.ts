@@ -1,4 +1,7 @@
-const extractLabelValue = (labelKey: string, object) => {
+const extractLabelValue = (
+  labelKey: string,
+  object: { metadata: { labels: { [x: string]: any } } },
+) => {
   if (object && object.metadata && object.metadata.labels) {
     return object.metadata.labels[labelKey];
   }
