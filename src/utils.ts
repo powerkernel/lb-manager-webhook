@@ -1,9 +1,6 @@
-const extractLableValue = (
-  label: string,
-  labels: [key: string],
-): string | null => {
-  if (typeof labels[label] !== 'undefined') {
-    return labels[label];
+const extractLabelValue = (labelKey: string, object) => {
+  if (object && object.metadata && object.metadata.labels) {
+    return object.metadata.labels[labelKey];
   }
   return null;
 };
@@ -24,4 +21,4 @@ const isIPv4 = (addr: string) => {
   return regExp.test(addr);
 };
 
-export { extractLableValue, getIPv4InternalIP, isIPv4 };
+export { extractLabelValue, getIPv4InternalIP, isIPv4 };

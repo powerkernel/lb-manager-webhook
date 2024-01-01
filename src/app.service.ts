@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { AdmissionRequest, AdmissionReview } from './k8s.types';
 import { addBackend, removeBackend } from './oci';
-import { extractLableValue, getIPv4InternalIP } from './utils';
+import { extractLabelValue, getIPv4InternalIP } from './utils';
 
 @Injectable()
 export class AppService {
@@ -20,21 +20,14 @@ export class AppService {
 
     // check if the node is control plane
     const controlPlane =
-      typeof request.object.metadata.labels[
-        'node-role.kubernetes.io/control-plane'
-      ] !== 'undefined';
+      extractLabelValue(
+        'node-role.kubernetes.io/control-plane',
+        request.object,
+      ) !== null;
 
     // check the current and olf `kured.io/reboot` label value
-    const reboot = extractLableValue(
-      'kured.io/reboot',
-      request.object.metadata?.labels ? request.object.metadata.labels : [],
-    );
-    const oldReboot = extractLableValue(
-      'kured.io/reboot',
-      request.oldObject.metadata?.labels
-        ? request.oldObject.metadata?.labels
-        : [],
-    );
+    const reboot = extractLabelValue('kured.io/reboot', request.object);
+    const oldReboot = extractLabelValue('kured.io/reboot', request.oldObject);
 
     // process
     if (oldReboot !== reboot && reboot === 'true') {
