@@ -23,7 +23,7 @@ export class AppService {
       extractLabelValue(
         'node-role.kubernetes.io/control-plane',
         request.object,
-      ) !== null;
+      ) === '';
 
     // check the current and olf `kured.io/reboot` label value
     const reboot = extractLabelValue('kured.io/reboot', request.object);
