@@ -10,5 +10,7 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm ci --omit=dev
 COPY --from=builder /usr/src/app/dist ./dist
+RUN chown -R node:node /usr/src/app
+USER node
 EXPOSE 3000
 CMD ["node", "dist/main"]

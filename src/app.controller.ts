@@ -18,13 +18,20 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @Post()
+  @Post('/oracle')
   @HttpCode(HttpStatus.OK)
-  handleWebhook(@Body() admissionReview: AdmissionReview): AdmissionReview {
-    console.log(
-      'Received admission review request: ',
-      JSON.stringify(admissionReview),
-    );
-    return this.appService.validate(admissionReview);
+  async oracle(
+    @Body() admissionReview: AdmissionReview,
+  ): Promise<AdmissionReview> {
+    // always allow the request
+    const response = {
+      ...admissionReview,
+      response: {
+        uid: admissionReview.request.uid,
+        allowed: true,
+      },
+    };
+    this.appService.oracle(admissionReview);
+    return response;
   }
 }

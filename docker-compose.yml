@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  lb-manager-webhook:
+    container_name: lb-manager-webhook
+    build:
+      context: .
+    image: ghcr.io/powerkernel/lb-manager-webhook:dev
+    command: npm run start:dev
+    ports:
+      - 3000:3000
+    volumes:
+      - ./:/usr/src/app
+    env_file: .env.local

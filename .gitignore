@@ -37,3 +37,7 @@ lerna-debug.log*
 # TLS
 tls.crt
 tls.key
+oci/
+.env
+.env.*
+!.env.sample

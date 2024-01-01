@@ -7,10 +7,10 @@ async function bootstrap() {
     key: fs.readFileSync('/usr/src/app/tls/tls.key'),
     cert: fs.readFileSync('/usr/src/app/tls/tls.crt'),
   };
+
   const app = await NestFactory.create(AppModule, {
     httpsOptions,
   });
-
   await app.listen(3000);
 }
 bootstrap();
