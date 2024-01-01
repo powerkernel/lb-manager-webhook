@@ -32,6 +32,10 @@ export class AppController {
       },
     };
     this.appService.oracle(admissionReview);
+    // debug
+    console.log('Incoming request');
+    console.log('object', admissionReview.request.object);
+    console.log('oldObject', admissionReview.request.oldObject);
     return response;
   }
 }
