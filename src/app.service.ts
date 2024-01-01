@@ -27,11 +27,13 @@ export class AppService {
     // check the current and olf `kured.io/reboot` label value
     const reboot = extractLableValue(
       'kured.io/reboot',
-      request.object.metadata.labels,
+      request.object.metadata?.labels ? request.object.metadata.labels : [],
     );
     const oldReboot = extractLableValue(
       'kured.io/reboot',
-      request.oldObject.metadata.labels,
+      request.oldObject.metadata?.labels
+        ? request.oldObject.metadata?.labels
+        : [],
     );
 
     // process
