@@ -35,63 +35,86 @@ export class AppService {
         console.info(
           `Control Plane Node ${nodeName} is rebooting, removing from API load balancer`,
         );
-        await removeBackend(
-          process.env.OCI_API_CONFIG_PROFILE,
-          process.env.OCI_API_NETWORK_LOAD_BALANCER_ID,
-          'control-plane',
-          ipV4,
-          6443,
-        );
+        try {
+          await removeBackend(
+            process.env.OCI_API_CONFIG_PROFILE,
+            process.env.OCI_API_NETWORK_LOAD_BALANCER_ID,
+            'control-plane',
+            ipV4,
+            6443,
+          );
+        } catch (error) {
+          console.error(error);
+        }
       } else {
         console.info(
           `Worker Node ${nodeName} is rebooting, removing from Ingress load balancer`,
         );
-        await removeBackend(
-          process.env.OCI_INGRESS_CONFIG_PROFILE,
-          process.env.OCI_INGRESS_NETWORK_LOAD_BALANCER_ID,
-          'http',
-          ipV4,
-          80,
-        );
+        try {
+          await removeBackend(
+            process.env.OCI_INGRESS_CONFIG_PROFILE,
+            process.env.OCI_INGRESS_NETWORK_LOAD_BALANCER_ID,
+            'http',
+            ipV4,
+            80,
+          );
+        } catch (error) {
+          console.error(error);
+        }
 
-        await removeBackend(
-          process.env.OCI_INGRESS_CONFIG_PROFILE,
-          process.env.OCI_INGRESS_NETWORK_LOAD_BALANCER_ID,
-          'https',
-          ipV4,
-          443,
-        );
+        try {
+          await removeBackend(
+            process.env.OCI_INGRESS_CONFIG_PROFILE,
+            process.env.OCI_INGRESS_NETWORK_LOAD_BALANCER_ID,
+            'https',
+            ipV4,
+            443,
+          );
+        } catch (error) {}
       }
     } else if (oldReboot !== reboot && reboot === 'false') {
       if (controlPlane) {
         console.info(
           `Control Plane Node ${nodeName} is back online, adding to API load balancer`,
         );
-        await addBackend(
-          process.env.OCI_API_CONFIG_PROFILE,
-          process.env.OCI_API_NETWORK_LOAD_BALANCER_ID,
-          'control-plane',
-          ipV4,
-          6443,
-        );
+        try {
+          await addBackend(
+            process.env.OCI_API_CONFIG_PROFILE,
+            process.env.OCI_API_NETWORK_LOAD_BALANCER_ID,
+            'control-plane',
+            ipV4,
+            6443,
+          );
+        } catch (error) {
+          console.error(error);
+        }
       } else {
         console.info(
           `Worker Node ${nodeName} is back online, adding to Ingress load balancer`,
         );
-        await addBackend(
-          process.env.OCI_INGRESS_CONFIG_PROFILE,
-          process.env.OCI_INGRESS_NETWORK_LOAD_BALANCER_ID,
-          'http',
-          ipV4,
-          80,
-        );
-        await addBackend(
-          process.env.OCI_INGRESS_CONFIG_PROFILE,
-          process.env.OCI_INGRESS_NETWORK_LOAD_BALANCER_ID,
-          'https',
-          ipV4,
-          443,
-        );
+        try {
+          await addBackend(
+            process.env.OCI_INGRESS_CONFIG_PROFILE,
+            process.env.OCI_INGRESS_NETWORK_LOAD_BALANCER_ID,
+            'http',
+            ipV4,
+            80,
+          );
+        } catch (error) {
+          console.error(error);
+        }
+
+        try {
+          await addBackend(
+            process.env.OCI_INGRESS_CONFIG_PROFILE,
+            process.env.OCI_INGRESS_NETWORK_LOAD_BALANCER_ID,
+            'https',
+            ipV4,
+            443,
+          );
+        } catch (error) {
+          console.error(error);
+        }
       }
     }
   }
