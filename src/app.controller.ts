@@ -23,11 +23,6 @@ export class AppController {
   async oracle(
     @Body() admissionReview: AdmissionReview,
   ): Promise<AdmissionReview> {
-    // debug
-    console.log('START: Incoming request');
-    console.log('object', admissionReview.request.object.metadata);
-    console.log('oldObject', admissionReview.request.oldObject);
-    console.log('END: Incoming request');
     // always allow the request
     const response = {
       ...admissionReview,
@@ -36,7 +31,12 @@ export class AppController {
         allowed: true,
       },
     };
-    this.appService.oracle(admissionReview);
+
+    // skip if no old object
+    if (!admissionReview.request.oldObject) {
+      this.appService.oracle(admissionReview);
+    }
+
     return response;
   }
 }

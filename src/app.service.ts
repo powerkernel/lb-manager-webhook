@@ -44,7 +44,7 @@ export class AppService {
             6443,
           );
         } catch (error) {
-          console.error(error);
+          console.error('OCI Error:', error);
         }
       } else {
         console.info(
@@ -59,7 +59,7 @@ export class AppService {
             80,
           );
         } catch (error) {
-          console.error(error);
+          console.error('OCI Error:', error);
         }
 
         try {
@@ -86,7 +86,7 @@ export class AppService {
             6443,
           );
         } catch (error) {
-          console.error(error);
+          console.error('OCI Error:', error);
         }
       } else {
         console.info(
@@ -101,7 +101,7 @@ export class AppService {
             80,
           );
         } catch (error) {
-          console.error(error);
+          console.error('OCI Error:', error);
         }
 
         try {
@@ -113,7 +113,7 @@ export class AppService {
             443,
           );
         } catch (error) {
-          console.error(error);
+          console.error('OCI Error:', error);
         }
       }
     }
