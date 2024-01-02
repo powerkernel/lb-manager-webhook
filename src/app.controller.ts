@@ -33,7 +33,7 @@ export class AppController {
     };
 
     // skip if no old object
-    if (!admissionReview.request.oldObject) {
+    if (admissionReview.request.oldObject) {
       this.appService.oracle(admissionReview);
     }
 
